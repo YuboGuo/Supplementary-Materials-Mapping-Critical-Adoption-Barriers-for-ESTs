@@ -94,6 +94,5 @@ nega_topic = []
 for jk in range(len(matching_lines_nega)):
     jkl = matching_lines_nega[jk]
     nega_topic.append(max_column_indices[jkl])
-print('消极评论每个文档对应的最大可能主题的序号', nega_topic)
 print(len(nega_topic))
 np.savetxt("r_nega_doc-topic.txt", nega_topic)
