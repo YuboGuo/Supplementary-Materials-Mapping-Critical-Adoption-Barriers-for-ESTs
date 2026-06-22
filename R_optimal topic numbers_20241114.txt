@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+```{r}
+library(tm)
+library(qdap)
+library(lda)
+library(pbapply)
+library(LDAvis)
+library(treemap)
+library(car)
+library("ldatuning")
+library("topicmodels")
+library(tidyverse)
+library(Matrix)
+library(slam)
+library(microbenchmark)
+library(dplyr)
+options(stringsAsFactors = F)
+```
+
+```{r}
+d <- read.table(file= "D:/Yubo Guo/Z2进行中的研究/lda/textmining/chuneng492.csv",sep = ',',header = TRUE,encoding = "UTF-8")
+```
+
+```{r}
+#?ı?Ԥ????
+blank.removal<-function(x){
+  x<-gsub("'", '', x)
+  x<-gsub("]", '', x)
+  x<-gsub("[[]", '', x)
+  x<-gsub('[\\]', '', x)
+  x<-gsub('"', '', x)
+  x<-gsub('\n', '', x)
+  x<-gsub("[c(]", '', x)
+  x<-gsub("[)]", '', x)
+  #x<-gsub('[ ]', '', x)
+  #x<-unlist(strsplit(x,','))
+}
+
+d$text <-pblapply(d$text,blank.removal) #lapply,pb??ʾ??????
+
+```
+```{r}
+d$text
+```
+
+```{r}
+vid = Corpus(VectorSource(d$text))
+dtm <- DocumentTermMatrix(vid)
+#dtm_tfidf <- DocumentTermMatrix(vid, control = list(weighting = weightTfIdf))
+```
+
+```{r}
+str(vid[1:2])
+```
+```{r}
+dtm$dimnames$Terms
+```
+```{r}
+result <- FindTopicsNumber(
+  dtm,
+  topics = seq(from = 2, to = 10, by = 1),
+  metrics = c("Griffiths2004","Arun2010",  "Deveaud2014"),
+  method = "Gibbs",
+  control = list(seed = 77),
+  mc.cores = 2L,
+  verbose = TRUE
+)
+FindTopicsNumber_plot(result)
+```
+
+```{r}
+print(result)
+```
