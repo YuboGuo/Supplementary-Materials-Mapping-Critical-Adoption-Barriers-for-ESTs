@@ -11,4 +11,5 @@ CONTENT
 
 4.Calculation procedures include: 
    1)Code used for text segmentation：The file name is Expert evaluation metrices20250425.xlsx
-   2）
+   2）Code for determining the optimal number of topics：The file name is Expert evaluation metrices20250425.xlsx
+   3）
