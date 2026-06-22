@@ -10,7 +10,7 @@ CONTENT
 3.Raw dataset of expert evaluation matrices: The file name is Expert evaluation metrices20250425.xlsx
 
 4.Calculation procedures include: 
-   1)Code used for text segmentation：The file name is Expert evaluation metrices20250425.xlsx
+   1)Code used for text segmentation：The file name is seg1109.py
    2）Code for determining the optimal number of topics：The file name is R_optimal topic numbers_20241114.txt
    3）
 
